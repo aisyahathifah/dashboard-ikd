@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Analitik IKD — Survei Adopsi 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <div class="brand-text">
+        <span class="brand-title">IKD Analytics</span>
+        <span class="brand-sub">Survei Adopsi 2024</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-label">Navigasi</span>
+      <a href="#ringkasan" class="nav-item active" data-section="ringkasan">
+        <i class="bi bi-grid-1x2-fill"></i> Ringkasan
+      </a>
+      <a href="#demografi" class="nav-item" data-section="demografi">
+        <i class="bi bi-people-fill"></i> Demografi
+      </a>
+      <a href="#adopsi" class="nav-item" data-section="adopsi">
+        <i class="bi bi-phone-fill"></i> Adopsi IKD
+      </a>
+      <a href="#awareness" class="nav-item" data-section="awareness">
+        <i class="bi bi-lightbulb-fill"></i> Awareness
+      </a>
+      <a href="#kepuasan" class="nav-item" data-section="kepuasan">
+        <i class="bi bi-star-fill"></i> Kepuasan
+      </a>
+      <a href="#insight" class="nav-item" data-section="insight">
+        <i class="bi bi-graph-up-arrow"></i> Insight
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="responden-badge">
+        <span class="badge-label">Total Responden</span>
+        <span class="badge-num" id="sidebar-total">—</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- TOGGLE BUTTON (mobile) -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- NAVBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Dashboard Analitik Pemanfaatan IKD</span>
+    </div>
+    <div class="topbar-right">
+      <!-- Filters -->
+      <div class="filter-group">
+        <div class="filter-item">
+          <label><i class="bi bi-person"></i></label>
+          <select id="filterGender" class="filter-select">
+            <option value="">Semua Gender</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label><i class="bi bi-calendar3"></i></label>
+          <select id="filterAge" class="filter-select">
+            <option value="">Semua Usia</option>
+            <option value="18-25">18–25 tahun</option>
+            <option value="26-35">26–35 tahun</option>
+            <option value="36-45">36–45 tahun</option>
+            <option value="46+">46+ tahun</option>
+          </select>
+        </div>
+        <button class="btn-reset" id="btnReset"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ===== SECTION 1: RINGKASAN ===== -->
+    <section class="dash-section" id="ringkasan">
+      <div class="section-header">
+        <div class="section-badge">01</div>
+        <div>
+          <h2 class="section-title">Ringkasan</h2>
+          <p class="section-sub">Gambaran umum hasil survei adopsi IKD</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card" id="kpi-total">
+          <div class="kpi-icon bg-teal"><i class="bi bi-people-fill"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-value" id="kv-total">—</div>
+            <div class="kpi-label">Total Responden</div>
+          </div>
+          <div class="kpi-pulse"></div>
+        </div>
+        <div class="kpi-card" id="kpi-punya">
+          <div class="kpi-icon bg-green"><i class="bi bi-shield-fill-check"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-value" id="kv-punya">—</div>
+            <div class="kpi-label">Memiliki IKD</div>
+          </div>
+          <div class="kpi-pulse green"></div>
+        </div>
+        <div class="kpi-card" id="kpi-belum">
+          <div class="kpi-icon bg-amber"><i class="bi bi-shield-x"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-value" id="kv-belum">—</div>
+            <div class="kpi-label">Belum Memiliki IKD</div>
+          </div>
+          <div class="kpi-pulse amber"></div>
+        </div>
+        <div class="kpi-card" id="kpi-aktif">
+          <div class="kpi-icon bg-blue"><i class="bi bi-lightning-fill"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-value" id="kv-aktif">—</div>
+            <div class="kpi-label">Pengguna Aktif</div>
+          </div>
+          <div class="kpi-pulse blue"></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Kepemilikan IKD</span>
+            <span class="chart-badge">Donut</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartKepemilikan"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Status Aktif Pengguna IKD</span>
+            <span class="chart-badge">Donut</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartStatusAktif"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: DEMOGRAFI ===== -->
+    <section class="dash-section" id="demografi">
+      <div class="section-header">
+        <div class="section-badge">02</div>
+        <div>
+          <h2 class="section-title">Demografi</h2>
+          <p class="section-sub">Profil responden berdasarkan usia, gender, dan pekerjaan</p>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card chart-card-wide">
+          <div class="chart-card-header">
+            <span class="chart-title">Distribusi Usia</span>
+            <span class="chart-badge">Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartUsia"></canvas></div>
+          <div class="chart-insight" id="insightUsia"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Jenis Kelamin</span>
+            <span class="chart-badge">Doughnut</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartGender"></canvas></div>
+          <div class="chart-insight" id="insightGender"></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card chart-card-full">
+          <div class="chart-card-header">
+            <span class="chart-title">Distribusi Pekerjaan</span>
+            <span class="chart-badge">Horizontal Bar</span>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="chartPekerjaan"></canvas></div>
+          <div class="chart-insight" id="insightPekerjaan"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ADOPSI IKD ===== -->
+    <section class="dash-section" id="adopsi">
+      <div class="section-header">
+        <div class="section-badge">03</div>
+        <div>
+          <h2 class="section-title">Adopsi IKD</h2>
+          <p class="section-sub">Pola kepemilikan, aktivasi, dan pemanfaatan IKD</p>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Frekuensi Penggunaan IKD</span>
+            <span class="chart-badge">Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartFrekuensi"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Status Kepemilikan</span>
+            <span class="chart-badge">Pie</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartAdopsiPie"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card chart-card-full">
+          <div class="chart-card-header">
+            <span class="chart-title">Penggunaan IKD untuk Apa Saja</span>
+            <span class="chart-badge">Horizontal Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartPenggunaan"></canvas></div>
+          <div class="chart-insight" id="insightPenggunaan"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: AWARENESS ===== -->
+    <section class="dash-section" id="awareness">
+      <div class="section-header">
+        <div class="section-badge">04</div>
+        <div>
+          <h2 class="section-title">Awareness</h2>
+          <p class="section-sub">Tingkat pengetahuan, hambatan, dan sumber informasi</p>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Tingkat Pengetahuan IKD</span>
+            <span class="chart-badge">Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartPengetahuan"></canvas></div>
+          <div class="chart-insight" id="insightPengetahuan"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Minat Menggunakan IKD</span>
+            <span class="chart-badge">Doughnut</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartMinat"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Sumber Informasi IKD</span>
+            <span class="chart-badge">Horizontal Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartSumberInfo"></canvas></div>
+          <div class="chart-insight" id="insightSumberInfo"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Alasan Belum Menggunakan IKD</span>
+            <span class="chart-badge">Horizontal Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartAlasan"></canvas></div>
+          <div class="chart-insight" id="insightAlasan"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: KEPUASAN ===== -->
+    <section class="dash-section" id="kepuasan">
+      <div class="section-header">
+        <div class="section-badge">05</div>
+        <div>
+          <h2 class="section-title">Kepuasan Pengguna</h2>
+          <p class="section-sub">Evaluasi kemudahan, manfaat, kepercayaan, dan kepuasan</p>
+        </div>
+      </div>
+
+      <!-- Score Cards -->
+      <div class="score-grid" id="scoreGrid">
+        <div class="score-card">
+          <div class="score-label">Kemudahan</div>
+          <div class="score-val" id="sv-kemudahan">—</div>
+          <div class="score-bar-wrap"><div class="score-bar" id="sb-kemudahan"></div></div>
+        </div>
+        <div class="score-card">
+          <div class="score-label">Manfaat</div>
+          <div class="score-val" id="sv-manfaat">—</div>
+          <div class="score-bar-wrap"><div class="score-bar" id="sb-manfaat"></div></div>
+        </div>
+        <div class="score-card">
+          <div class="score-label">Kepercayaan</div>
+          <div class="score-val" id="sv-kepercayaan">—</div>
+          <div class="score-bar-wrap"><div class="score-bar" id="sb-kepercayaan"></div></div>
+        </div>
+        <div class="score-card">
+          <div class="score-label">Kepuasan</div>
+          <div class="score-val" id="sv-kepuasan">—</div>
+          <div class="score-bar-wrap"><div class="score-bar" id="sb-kepuasan"></div></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Radar Kepuasan</span>
+            <span class="chart-badge">Radar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-title">Perbandingan Rata-rata Skor</span>
+            <span class="chart-badge">Bar</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartSkorBar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="stats-table-wrap">
+        <div class="stats-table-header">Statistik Deskriptif</div>
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Dimensi</th>
+              <th>Mean</th>
+              <th>Median</th>
+              <th>Min</th>
+              <th>Maks</th>
+              <th>Kategori</th>
+            </tr>
+          </thead>
+          <tbody id="statsTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: INSIGHT ===== -->
+    <section class="dash-section" id="insight">
+      <div class="section-header">
+        <div class="section-badge">06</div>
+        <div>
+          <h2 class="section-title">Insight Otomatis</h2>
+          <p class="section-sub">Temuan kunci yang dihasilkan langsung dari data survei</p>
+        </div>
+      </div>
+
+      <div class="insight-grid" id="insightGrid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <footer class="dash-footer">
+      Dashboard Analitik IKD &mdash; Athifah | 2026 &mdash; Dibuat otomatis dari <code>data.csv</code>
+    </footer>
+
+  </main>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Memuat data survei…</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
